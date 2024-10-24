@@ -1,4 +1,4 @@
 .eslintrc.js
 .env
 node_modules
-build
+dist
