@@ -6,8 +6,7 @@ import { User } from '../common/types';
 
 export const dispatcher = async (request: IncomingMessage, response: ServerResponse): Promise<void> => { 
   console.log(`method is ${request.method}, url = ${request.url}`);
-  // const user = await parseRequestData(request);
-  // let {statusCode, message} = isValid(user);
+
   let user: User;
   let statusCode: number = -1;
   let message: string = ``;
