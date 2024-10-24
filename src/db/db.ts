@@ -3,11 +3,13 @@ import { User } from '../common/types';
 
 export const users: User[] = [];
 
-export function addUser(user: User): void {
+export function addUser(user: User): User {
   const newUser: User = structuredClone<User>(user);
   newUser.id = v4();
 
   users.push(newUser);
+
+  return newUser;
 }
 
 export function getUser(id: string): User | null {

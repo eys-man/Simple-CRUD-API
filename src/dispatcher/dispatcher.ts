@@ -26,8 +26,7 @@ export const dispatcher = async (request: IncomingMessage, response: ServerRespo
         if( message !== `Valid`) {
           statusCode = 400;
         } else {
-          message = JSON.stringify(user);
-          addUser(user);
+          message = JSON.stringify( addUser(user) );
           statusCode = 201;
         }
         break;
@@ -83,12 +82,12 @@ export const dispatcher = async (request: IncomingMessage, response: ServerRespo
           if( validate(userId) ) { // проверка на uuid
             // прочитать нового user
             const newUser = await parseRequestData(request);
+            newUser.id = userId;
             message = isUserValid(newUser);
             if( message !== `Valid`) {
               statusCode = 400;
             } else if( updateUser(userId, newUser )) {
                 message = JSON.stringify(newUser);
-              // updateUser(userId, newUser);
                 statusCode = 201;
             } else {
                 statusCode = 404;
