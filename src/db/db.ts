@@ -1,20 +1,13 @@
 import { v4 } from 'uuid';
 import { User } from '../common/types';
-import { isValid } from '../utils/utils';
 
 export const users: User[] = [];
 
 export function addUser(user: User): void {
-  if (isValid(user)) {
-    const newUser: User = {
-      id: v4(),
-      username: user.username,
-      age: user.age,
-      hobbies: [...user.hobbies],
-    }
+  const newUser: User = structuredClone<User>(user);
+  newUser.id = v4();
 
-    users.push(newUser);
-  }
+  users.push(newUser);
 }
 
 export function getUser(id: string): User | null {
@@ -39,14 +32,16 @@ export function deleteUser(id: string): boolean {
   return isFound;
 }
 
-// export function updateUser(id: string, updUser: User): void {
-  // users.forEach((user) => {
-  //   if( user.id == id ) {
-  //     user.age = updUser.age;
-  //     user.id = updUser.id;
-  //     user.hobbies = updUser.hobbies.slice(0); 
-  //   }
-  // });
+export function updateUser(id: string, updUser: User): boolean {
+  let isFound = false;
+  users.forEach((user) => {
+    if( user.id == id ) {
+      user.username = updUser.username;
+      user.age = updUser.age;
+      user.hobbies = updUser.hobbies.slice(0); 
+      isFound = true;
+    }
+  });
 
-  // throw new Error(`Can't find that user!`);
-// }
+  return isFound;
+}
